@@ -1,12 +1,14 @@
+#!/usr/bin/env python3
 from distutils import extension
 import os
 import shutil
+import sys
 
-inputDir = "/home/venkataramananc/Downloads/-1/empty/"
-outputDir = "/home/venkataramananc/Downloads/-1/empty/"
-cnt = 21100
-
-for i in os.listdir(inputDir):
+inputDir = sys.argv[1]
+outputDir = inputDir
+cnt = int(sys.argv[2])
+filesList = os.listdir(inputDir)
+for i in filesList:
     extension = i.split(".")[-1]
     filenameNew = str(cnt)+"."+extension
     shutil.move(inputDir + i, outputDir + filenameNew)

@@ -1,0 +1,27 @@
+#!/usr/bin/env python3
+import os
+import shutil
+import sys
+import cv2
+import numpy as np
+
+inputDir = sys.argv[1]
+
+try:
+    os.mkdir(sys.argv[1]+"/mask")
+except:
+    pass
+
+
+outputDir = inputDir+"/mask"
+
+listDir = os.listdir(inputDir)
+
+
+for image_name in listDir:
+    if image_name == "mask":
+        continue
+    print(inputDir+image_name)
+    image = cv2.imread(inputDir+image_name)
+    mask = np.zeros(image.shape,dtype=np.uint8)
+    cv2.imwrite(outputDir+"/"+image_name,mask)
