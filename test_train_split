@@ -1,0 +1,27 @@
+#!/usr/bin/env python3
+import os
+import sys
+
+#test and train split
+
+inputDir = sys.argv[1]
+
+trainRatio = sys.argv[2]
+
+#create the train and test folder
+os.makedirs("train", exist_ok=True)
+os.makedirs("test", exist_ok=True)
+
+#list all the files in the input directory
+files = os.listdir(inputDir)
+
+#split the files into train and test
+train = files[:int(len(files)*float(trainRatio))]
+test = files[int(len(files)*float(trainRatio)):]
+
+#copy the files into the train and test folder
+for file in train:
+    os.system("cp "+inputDir+file+" train/")
+for file in test:
+    os.system("cp "+inputDir+file+" test/")
+    
