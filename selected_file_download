@@ -63,7 +63,8 @@ with Halo(text='Copying files', spinner='dots',color="cyan") as spinner:
         dir = "/".join(dir)
         os.makedirs(saveLocation+(dir), exist_ok=True)
         client.download_file(bucket_name, Key=object_summary.key, Filename = saveLocation+object_summary.key)
+        tcount += 1
         if i%10 == 0:
-            spinner.text = "Copying files: "+str(i)
-        tcount = i
-    spinner.succeed("Total files Copied: "+str(i))
+            spinner.text = "Copying files: "+str(tcount)
+        
+    spinner.succeed("Total files Copied: "+str(tcount))
