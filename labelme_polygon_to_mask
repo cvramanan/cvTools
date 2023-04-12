@@ -15,6 +15,7 @@ json_files = os.listdir(inputDir)
 #loading the json file
 for image_json in json_files:
     #neglect mask folder
+    print(image_json)
     if image_json == "mask":
         continue
     with open(inputDir+image_json) as file:

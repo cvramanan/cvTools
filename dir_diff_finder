@@ -1,0 +1,20 @@
+#!/usr/bin/env python3
+import os
+import sys
+import shutil
+
+dirA = sys.argv[1]
+dirB = sys.argv[2]
+
+filesA = os.listdir(dirA)
+filesB = os.listdir(dirB)
+
+output_dir = "fileDifferences/"
+os.makedirs(output_dir, exist_ok=True)
+
+
+for fileA in filesA:
+    if fileA not in filesB:
+        print("File {} is in {} but not in {}".format(fileA, dirA, dirB))
+        shutil.copyfile(os.path.join(dirA, fileA), os.path.join(output_dir, fileA))
+        

@@ -1,0 +1,21 @@
+#!/usr/bin/env python3
+import os
+import sys
+import json
+import base64
+
+inputDir = sys.argv[1]
+
+
+files = os.listdir(inputDir)
+os.makedirs("sortedImages", exist_ok=True)
+
+for file in files:
+    if file == "sortedImages":
+        continue
+    with open(inputDir+file) as f:
+        data = json.load(f)
+        for label in data["shapes"]:
+            os.makedirs("sortedImages/"+label["label"], exist_ok=True)
+            with open("sortedImages/"+label["label"]+"/"+file.split(".")[0]+".jpg", "wb") as fh:
+                fh.write(base64.b64decode(data["imageData"]))
