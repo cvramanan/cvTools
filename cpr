@@ -1,0 +1,22 @@
+#!/usr/bin/env python3
+import os
+import sys
+
+
+
+#recursively copy all file in every dir and put in a new dir
+
+inputDir = sys.argv[1]
+
+outputDir = "allFiles"
+
+os.makedirs(outputDir, exist_ok=True)
+
+dirList = os.listdir(inputDir)
+
+for dir in dirList:
+    if dir == outputDir:
+        continue
+    fileList = os.listdir(inputDir+dir)
+    for file in fileList:
+        os.system("cp "+inputDir+dir+"/"+file+" "+outputDir)
