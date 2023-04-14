@@ -23,7 +23,9 @@ for image_json in json_files:
         data = json.load(f)
         #changing the imagePath
         data["imagePath"] = str(fileCount) +".jpg"
-        fileCount += 1
+        
         #saving the json file
         with open(output_dir+str(fileCount)+".json", "w") as fh:
             json.dump(data, fh)
+        
+        fileCount += 1
