@@ -17,5 +17,9 @@ for file in files:
         data = json.load(f)
         for label in data["shapes"]:
             os.makedirs("sortedImages/"+label["label"], exist_ok=True)
-            with open("sortedImages/"+label["label"]+"/"+file.split(".")[0]+".jpg", "wb") as fh:
+            os.makedirs("sortedImages/"+label["label"]+"/images", exist_ok=True)
+            os.makedirs("sortedImages/"+label["label"]+"/labels", exist_ok=True)
+            with open("sortedImages/"+label["label"]+"/images/"+file.split(".")[0]+".jpg", "wb") as fh:
                 fh.write(base64.b64decode(data["imageData"]))
+            with open("sortedImages/"+label["label"]+"/labels/"+file.split(".")[0]+".json", "w") as fh:
+                json.dump(data, fh)
