@@ -1,0 +1,29 @@
+#!/usr/bin/env python3
+import os
+import sys
+import json
+import cv2
+import numpy as np
+import base64
+
+inputDir = sys.argv[1]
+output_dir = "images/"
+
+#creating the ground_truth folder if it doesn't exist
+os.makedirs(output_dir, exist_ok=True)
+
+#converting the json file to image
+json_files = os.listdir(inputDir)
+#loading the json file
+for image_json in json_files:
+    if image_json == "images":
+        continue
+    with open(inputDir+image_json) as f:
+        data = json.load(f)
+        #loading the image
+        img = cv2.imread(data["imageData"])
+        filePath = data["imagePath"]
+        #saving the image
+        with open("./images/"+filePath, "wb") as fh:
+            fh.write(base64.b64decode(data["imageData"]))
+        
