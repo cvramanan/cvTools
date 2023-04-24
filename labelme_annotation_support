@@ -36,7 +36,7 @@ for i in filesList:
     # try:
     files = {'file': (img_encoded,"") }
     r = requests.post(ip+'/infer/openwidth', files=files)
-    # print(r.text)
+    print(r.text)
 
     if r.text == "{}":
         continue
@@ -49,7 +49,7 @@ for i in filesList:
         parsedResponse = list(response[key])
         print(parsedResponse[0]) 
         annotationResult["label"] = parsedResponse[0]
-        annotationResult["points"] =  [[float(parsedResponse[1])*int(  data["imageWidth"]),float(parsedResponse[2])*int(data["imageHeight"])],[float(parsedResponse[3])*int(data["imageWidth"]),float(parsedResponse[4])*int(data["imageHeight"])]]
+        annotationResult["points"] =  [[float(parsedResponse[1]),float(parsedResponse[2])],[float(parsedResponse[3]),float(parsedResponse[4])]]
         print(annotationResult["points"])
         print(int(float(parsedResponse[1])))
         
