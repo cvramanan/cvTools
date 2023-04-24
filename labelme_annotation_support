@@ -1,0 +1,39 @@
+#!/usr/bin/env python3
+import requests
+import os
+import json
+import cv2
+import base64
+import time
+
+# ip = "https://solitary-glade-12689.pktriot.net"
+# ip = "http://countaiservices.local:8000"#avahi demon  creating delay
+ip = "http://192.168.1.232:8000"
+
+
+DIR = "/home/countai/Pictures/knitting/focusTest/defects-taken-from-meyor-with-30rpm/50/"
+
+
+
+
+for i in os.listdir(DIR):
+    iT = time.time()
+
+    with open(DIR+i, "rb") as image_file:
+        img_encoded = image_file.read()
+  
+    
+    #convert to bytes
+    bytes = base64.b64encode(img_encoded)
+   
+    try:
+        files = {'file': (bytes,"") }
+        
+        r = requests.post(ip+'/infer/openwidth', files=files)
+        print("Time taken to infer image", time.time()-iT)
+        
+        print(r.text)
+        
+    except Exception as e:
+        print(e)
+
