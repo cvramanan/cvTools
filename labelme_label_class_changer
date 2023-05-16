@@ -4,6 +4,10 @@ import os
 import json
 import argparse
 
+"""
+USAGE:
+labelme_label_class_changer --source=./labels/ --classes=<class to be replaced>:<replacement class> --classes=lycra_cut:beta
+"""
 
 
 parser = argparse.ArgumentParser(description='Label class changer')
