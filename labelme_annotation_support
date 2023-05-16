@@ -1,0 +1,75 @@
+#!/usr/bin/env python3
+import requests
+import os
+import json
+import base64
+import sys
+
+
+# ip = "https://solitary-glade-12689.pktriot.net"
+# ip = "http://countaiservices.local:8000"#avahi demon  creating delay
+ip = "http://192.168.1.232:8000"
+
+
+DIR = sys.argv[1]
+automatedLabelsDir = DIR+"automatedLabels/"
+filesList = os.listdir(DIR)
+os.makedirs(automatedLabelsDir, exist_ok=True)
+
+
+
+
+for i in filesList:
+
+    if i == "automatedLabels":
+        continue
+
+    #read the labelme json file
+    with open(DIR+i) as f:
+        data = json.load(f)
+    
+    img_encoded = data['imageData']
+
+
+   
+    annotationResult = {}
+    # try:
+    files = {'file': (img_encoded,"") }
+    r = requests.post(ip+'/infer/openwidth', files=files)
+  
+
+    if r.text == "{}":
+        continue
+
+    response = json.loads(r.text)
+    # print(response)
+
+    for key in response.keys():
+
+        parsedResponse = list(response[key])
+        # print(parsedResponse)
+ 
+        annotationResult["label"] = parsedResponse[0]
+        annotationResult["points"] =  [[float(parsedResponse[1]),float(parsedResponse[2])],[float(parsedResponse[3]),float(parsedResponse[4])]]
+ 
+        
+        annotationResult["group_id"] = None
+        annotationResult["shape_type"] = "rectangle"
+        annotationResult["flags"] = {}
+        # print(annotationResult)
+        data["shapes"].append(annotationResult)
+        annotationResult = {}
+        # print("data[shape]", data["shapes"])
+    # except Exception as e:
+    #     print(e)
+    
+
+    for k in data.keys():
+        if k == "imageData":
+            continue
+        print(k,data[k])
+
+    with open( automatedLabelsDir+i , 'w') as f:
+        # print("writing file: "+automatedLabelsDir+i)
+        json.dump(data, f)
+
