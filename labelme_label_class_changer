@@ -1,0 +1,48 @@
+#!/usr/bin/env python3
+import sys
+import os
+import json
+import argparse
+
+
+
+parser = argparse.ArgumentParser(description='Label class changer')
+parser.add_argument("--source", type=str, help='Input dir for labels')
+parser.add_argument("--classes",action="append", type=str, help='Class to change')
+args = parser.parse_args()
+
+INDIR = args.source
+
+print("Input dir: ", INDIR)
+print("Class to change: ", args.classes)
+
+OUTDIR = INDIR + "_changed"
+if not os.path.exists(OUTDIR):
+    os.makedirs(OUTDIR)
+
+classesToBeChanged = args.classes
+print("Classes to be changed: ", classesToBeChanged)
+classesToBeChanged = dict(item.split(":") for item in classesToBeChanged)
+print("Classes to be changed: ", classesToBeChanged)
+
+    
+
+
+
+#read all files in the directory
+for filename in os.listdir(INDIR):
+    if filename.endswith(".json"):
+        print("Processing file: ", filename)
+        with open(INDIR + "/" + filename) as f:
+            data = json.load(f)
+            for shape in data['shapes']:
+                if shape['label'] in classesToBeChanged:
+                    shape['label'] = classesToBeChanged[shape['label']]
+        with open(OUTDIR + "/" + filename, 'w') as f:
+            json.dump(data, f, indent=2)
+
+
+
+
+
+
