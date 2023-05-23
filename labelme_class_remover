@@ -1,0 +1,31 @@
+#!/usr/bin/env python3
+import sys
+import os
+import json
+import argparse
+
+parser = argparse.ArgumentParser(description='Unique class lister in labelme format')
+parser.add_argument("--source", type=str, help='Input dir for labels')
+parser.add_argument("--classes", type=str, help='Input dir for labels')
+args = parser.parse_args()
+
+INDIR = args.source
+classToRemove = args.classes
+
+print("Input dir: ", INDIR)
+OUTDIR = INDIR + "_new_classes"
+print("Output dir: ", OUTDIR)
+os.makedirs(OUTDIR, exist_ok=True)
+
+#read all files in the directory and remove classes
+for filename in os.listdir(INDIR):
+    if filename.endswith(".json"):
+        print("Processing file: ", filename)
+        with open(INDIR + "/" + filename) as f:
+            data = json.load(f)
+            for shape in data['shapes']:
+                if shape['label'] == classToRemove:
+                    data['shapes'].remove(shape)
+        with open(OUTDIR + "/" + filename, 'w') as outfile:
+            json.dump(data, outfile)
+        
