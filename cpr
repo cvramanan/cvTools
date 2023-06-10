@@ -14,9 +14,16 @@ os.makedirs(outputDir, exist_ok=True)
 
 dirList = os.listdir(inputDir)
 
-for dir in dirList:
-    if dir == outputDir:
-        continue
-    fileList = os.listdir(inputDir+dir)
-    for file in fileList:
-        os.system("cp "+inputDir+dir+"/"+file+" "+outputDir)
+# for dir in dirList:
+#     if dir == outputDir:
+#         continue
+#     fileList = os.listdir(inputDir+dir)
+#     for file in fileList:
+#         os.system("cp "+inputDir+dir+"/"+file+" "+outputDir)
+
+#traverse through all the files in the input directory
+for root, dirs, files in os.walk(inputDir):
+    for file in files:
+        #copy the file to the output directory
+        os.system("cp "+root+"/"+file+" "+outputDir)
+        

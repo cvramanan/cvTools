@@ -21,7 +21,7 @@ test = files[int(len(files)*float(trainRatio)):]
 
 #copy the files into the train and test folder
 for file in train:
-    os.system("cp "+inputDir+file+" train/")
+    os.system("cp '"+inputDir+file+"' train/")
 for file in test:
-    os.system("cp "+inputDir+file+" test/")
+    os.system("cp '"+inputDir+file+"' test/")
     
