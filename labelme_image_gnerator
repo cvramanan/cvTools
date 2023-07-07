@@ -17,6 +17,6 @@ for file in files:
         continue
     with open(inputDir+file) as f:
         data = json.load(f)
-        with open("images/"+file.split(".")[0]+".jpg", "wb") as fh:
+        with open("images/"+file.split(".")[0]+".png", "wb") as fh:
             fh.write(base64.b64decode(data["imageData"]))
         
