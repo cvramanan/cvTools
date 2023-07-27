@@ -4,6 +4,7 @@ import os
 import json
 import argparse
 from pathlib import Path
+import re
 
 parser = argparse.ArgumentParser(description='file spliter')
 parser.add_argument("--source", type=str, help='Input dir for labels')
@@ -26,9 +27,12 @@ os.makedirs(OUTDIR, exist_ok=True)
 count = 0
 dir_count = 0
 
-fileList = sorted(Path(INDIR).iterdir(), key=os.path.getmtime)
+fileList = os.listdir(INDIR)
 
-fileList = [str(x) for x in fileList]
+#sort the files in the directory
+fileList.sort(key=lambda f: int(re.sub('\D', '', f)))
+
+
 
 
 
@@ -39,5 +43,5 @@ for filename in fileList:
             dir_count += 1
             os.makedirs(OUTDIR + "/" + str(dir_count), exist_ok=True)
         print("Processing file: ", filename)
-        os.system("cp "+filename+" "+OUTDIR + "/" + str(dir_count))
+        os.system("cp "+INDIR+"/"+filename+" "+OUTDIR+"/"+str(dir_count))
         count += 1
