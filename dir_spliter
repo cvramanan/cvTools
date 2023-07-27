@@ -18,6 +18,9 @@ print("Input dir: ", INDIR)
 print("Output dir: ", OUTDIR)
 print("Split: ", SPLIT)
 
+#create the output directory
+os.makedirs(OUTDIR, exist_ok=True)
+
 #read all files in the directory and split it as per the split value and put in the output directory
 count = 0
 dir_count = 0
