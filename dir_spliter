@@ -1,0 +1,47 @@
+#!/usr/bin/env python3
+import sys
+import os
+import json
+import argparse
+from pathlib import Path
+import re
+
+parser = argparse.ArgumentParser(description='file spliter')
+parser.add_argument("--source", type=str, help='Input dir for labels')
+parser.add_argument("--dest", type=str, help='Output dir for labels')
+parser.add_argument("--split", type=int, help='Number of files per dir')
+args = parser.parse_args()
+
+INDIR = args.source
+OUTDIR = args.dest
+SPLIT = args.split
+
+print("Input dir: ", INDIR)
+print("Output dir: ", OUTDIR)
+print("Split: ", SPLIT)
+
+#create the output directory
+os.makedirs(OUTDIR, exist_ok=True)
+
+#read all files in the directory and split it as per the split value and put in the output directory
+count = 0
+dir_count = 0
+
+fileList = os.listdir(INDIR)
+
+#sort the files in the directory
+fileList.sort(key=lambda f: int(re.sub('\D', '', f)))
+
+
+
+
+
+for filename in fileList:
+    #check if it is a directory
+    if os.path.isdir(filename) == False:
+        if count % SPLIT == 0:
+            dir_count += 1
+            os.makedirs(OUTDIR + "/" + str(dir_count), exist_ok=True)
+        print("Processing file: ", filename)
+        os.system("cp "+INDIR+"/"+filename+" "+OUTDIR+"/"+str(dir_count))
+        count += 1
