@@ -18,8 +18,8 @@ for i in os.listdir(folder):
     if i == "jpg2png":
         continue
     img = cv2.imread(folder+i)
-    extension = i.split(".")[-1]
-    i = i[:-len(extension)]
+    # extension = i.split(".")[-1]
+    i = i[:-3]
     print(distDir+i+"png")
     cv2.imwrite(distDir+i+"png",img)
     print(img.shape)

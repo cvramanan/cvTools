@@ -25,5 +25,5 @@ dirList = os.listdir(inputDir)
 for root, dirs, files in os.walk(inputDir):
     for file in files:
         #copy the file to the output directory
-        os.system("cp "+root+"/"+file+" "+outputDir)
+        os.system("cp '"+root+"/"+file+"' "+outputDir)
         

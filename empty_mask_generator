@@ -19,9 +19,10 @@ listDir = os.listdir(inputDir)
 
 
 for image_name in listDir:
-    if image_name == "mask":
-        continue
     print(inputDir+image_name)
+    if os.path.isdir(inputDir+image_name) == True:
+        continue
+    
     image = cv2.imread(inputDir+image_name)
     mask = np.zeros(image.shape,dtype=np.uint8)
     cv2.imwrite(outputDir+"/"+image_name,mask)

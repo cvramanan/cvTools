@@ -16,7 +16,7 @@ json_files = os.listdir(inputDir)
 for image_json in json_files:
     #neglect mask folder
     print(image_json)
-    if image_json == "mask":
+    if os.path.isdir(inputDir+image_json) == True:
         continue
     with open(inputDir+image_json) as file:
         data = json.load(file)
@@ -34,5 +34,6 @@ for image_json in json_files:
     for shape in data['shapes']:
         mask = cv2.fillPoly(mask, [np.array(shape['points'], dtype=np.int32)], 255)
 
+    filename = image_json[:-5]
     # saving the ground truth masks
     cv2.imwrite(os.path.join(output_dir,filename) + ".png", mask)

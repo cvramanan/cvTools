@@ -3,20 +3,26 @@ import os
 import sys
 import json
 import base64
+import argparse
 
-inputDir = sys.argv[1]
+parser = argparse.ArgumentParser(description='Unique class lister in labelme format')
+parser.add_argument("--source", type=str, help='Input dir for labels')
+parser.add_argument("--format", type=str, help='Input dir for labels')
+args = parser.parse_args()
 
 
 
 #read the files in the input directory and generate the images with imageData
+inputDir = args.source
 files = os.listdir(inputDir)
 #create images directory
 os.makedirs("images", exist_ok=True)
 for file in files:
     if file == "images":
         continue
+    print(inputDir+file)
     with open(inputDir+file) as f:
         data = json.load(f)
-        with open("images/"+file.split(".")[0]+".png", "wb") as fh:
+        with open("images/"+file.split(".")[0]+"."+args.format, "wb") as fh:
             fh.write(base64.b64decode(data["imageData"]))
         
