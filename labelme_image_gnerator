@@ -18,9 +18,9 @@ files = os.listdir(inputDir)
 #create images directory
 os.makedirs("images", exist_ok=True)
 for file in files:
-    if file == "images":
+    if file == "images" or os.path.isdir(inputDir+file) == True :
         continue
-    print(inputDir+file)
+    # print(inputDir+file)
     with open(inputDir+file) as f:
         data = json.load(f)
         with open("images/"+file.split(".")[0]+"."+args.format, "wb") as fh:
