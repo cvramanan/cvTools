@@ -1,0 +1,41 @@
+#!/usr/bin/env python3
+import os
+import sys
+import json
+import base64
+import argparse
+import cv2
+
+parser = argparse.ArgumentParser(description='image to labelme converter')
+parser.add_argument("--source", type=str, help='Input dir for labels')
+
+args = parser.parse_args()
+
+#read the files in the input directory and generate the labelme json file
+inputDir = args.source
+files = os.listdir(inputDir)
+#create images directory
+os.makedirs("labels", exist_ok=True)
+
+
+for file in files:
+    if file == "labels" or os.path.isdir(inputDir+file) == True :
+        continue
+
+    image = cv2.imread(inputDir+file)
+    height, width, channels = image.shape
+    data = {}
+    data['version'] = "4.5.6"
+    data['flags'] = {}
+    data['shapes'] = []
+    data['imagePath'] = file
+    data['imageData'] = base64.b64encode(open(inputDir+file, "rb").read()).decode("utf-8")
+    data['imageHeight'] = height
+    data['imageWidth'] = width
+    data['imageDepth'] = channels
+    
+    with open("labels/"+file.split(".")[0]+".json", "w") as fh:
+        json.dump(data, fh)
+
+        
+
