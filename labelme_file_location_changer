@@ -22,7 +22,7 @@ for image_json in json_files:
     with open(inputDir+image_json) as f:
         data = json.load(f)
         #changing the imagePath
-        data["imagePath"] = "images/"+str(fileCount) +".jpg"
+        data["imagePath"] = str(fileCount) +".png"
         
         #saving the json file
         with open(output_dir+str(fileCount)+".json", "w") as fh:
