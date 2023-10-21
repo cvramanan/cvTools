@@ -22,6 +22,6 @@ for filename in os.listdir(INDIR):
             data = json.load(f)
             for shape in data['shapes']:
                 classes.add(shape['label'])
-                counter[shape['label']] += 1 if shape['label'] in counter else 1
+                counter[shape['label']] = 1+counter[shape['label']] if shape['label'] in counter else 1
 
 print("Count of each  classe: ", counter)
