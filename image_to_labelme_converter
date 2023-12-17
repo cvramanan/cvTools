@@ -32,7 +32,7 @@ for file in files:
     data['imageData'] = base64.b64encode(open(inputDir+file, "rb").read()).decode("utf-8")
     data['imageHeight'] = height
     data['imageWidth'] = width
-    data['imageDepth'] = channels
+    # data['imageDepth'] = channels
     
     with open("labels/"+file.split(".")[0]+".json", "w") as fh:
         json.dump(data, fh)
