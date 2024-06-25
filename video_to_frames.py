@@ -3,7 +3,7 @@ from cv2 import VideoCapture
 import numpy as np
 import time
 
-INPUT_FILENAME = './datainput/boxes2.mp4'
+INPUT_FILENAME = '/home/countai/projects/box_counting/input/boxes2.mp4'
 OUTPUT_DIR = './dataoutput/'
 cam = VideoCapture(INPUT_FILENAME)
 i = 0
